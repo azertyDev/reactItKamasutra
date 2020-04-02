@@ -1,0 +1,20 @@
+.nav {
+  grid-area: n;
+  background-color: burlywood;
+}
+
+.item {
+  color: whitesmoke;
+  border: 1px solid cornsilk;
+  padding: 10px;
+  cursor: pointer;
+  pointer-events: painted;
+}
+
+.item:hover {
+  color: gold;
+}
+
+.item:active {
+  color: red;
+}

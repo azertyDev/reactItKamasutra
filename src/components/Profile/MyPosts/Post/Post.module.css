@@ -1,0 +1,8 @@
+.item {
+  display: flex;
+  align-items: center;
+  color: floralwhite;
+}
+.item img {
+  width: 100px;
+}
