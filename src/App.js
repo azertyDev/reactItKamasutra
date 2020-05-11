@@ -1,27 +1,27 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-const dialogComponent = () => <Dialogs />;
-const profileComponent = () => <Profile />;
+const App = (props) => {
+	const dialogComponent = () => <DialogsContainer store={props.store}/>;
+	const profileComponent = () => <Profile store={props.store}/>;
 
-function App() {
-  return (
-    <Router>
-      <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Route exact path="/dialogs" render={dialogComponent} />
-          <Route path="/profile" component={profileComponent} />
-        </div>
-      </div>
-    </Router>
-  );
-}
+	return (
+		<Router>
+			<div className="app-wrapper">
+				<Header/>
+				<Navbar/>
+				<div className="app-wrapper-content">
+					<Route exact path="/dialogs" render={dialogComponent}/>
+					<Route path="/profile" component={profileComponent}/>
+				</div>
+			</div>
+		</Router>
+	);
+};
 
 export default App;

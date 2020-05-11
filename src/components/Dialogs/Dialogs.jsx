@@ -1,39 +1,51 @@
-import React, { Component } from "react";
+import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-let dialogData = [
-  { name: "John", id: 1 },
-  { name: "Tom", id: 2 },
-  { name: "Bill", id: 3 },
-  { name: "Adam", id: 4 },
-  { name: "Steve", id: 5 },
-  { name: "Emily", id: 6 }
-];
+const Dialogs = (props) => {
+	let state = props.dialogsPage;
 
-let messagesData = [
-  { id: 1, message: "Hi" },
-  { id: 2, message: "How is your it-camasutra?" },
-  { id: 3, message: "Fine" },
-  { id: 4, message: "Thanks" },
-  { id: 5, message: "Yo" },
-  { id: 6, message: "Yo" }
-];
+	const dialogsElements = state.dialogs.map((d) => (
+		<DialogItem name={d.name} id={d.id}/>
+	));
 
-let dialogsElements = dialogData.map(d => (
-  <DialogItem name={d.name} id={d.id} />
-));
+	const messagesElements = state.messages.map((m) => (
+		<Message message={m.message}/>
+	));
 
-let messagesElements = messagesData.map(m => <Message message={m.message} />);
+	const newMessageBody = state.newMessageBody;
 
-export default class Dialogs extends Component {
-  render() {
-    return (
-      <div className={classes.dialogs}>
-        <div className={classes.dialogItems}>{dialogsElements}</div>
-        <div className={classes.messages}>{messagesElements}</div>
-      </div>
-    );
-  }
-}
+	let onSendMessageClick = () => {
+		props.sendMessage();
+	};
+
+	let onNewMessageChange = (e) => {
+		let body = e.target.value;
+		props.updateNewMessageBody(body);
+	};
+
+	return (
+		<div className={classes.dialogs}>
+			<div className={classes.dialogItems}>{dialogsElements}</div>
+			<div className={classes.messages}>
+				<div>{messagesElements}</div>
+
+				<div>
+					<div>
+            <textarea
+	            value={newMessageBody}
+	            onChange={onNewMessageChange}
+	            placeholder="Enter your message"
+            />
+					</div>
+					<div>
+						<button onClick={onSendMessageClick}>Send</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default Dialogs;

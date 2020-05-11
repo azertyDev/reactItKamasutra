@@ -2,29 +2,41 @@ import React from "react";
 import classes from "../MyPosts/MyPosts.module.css";
 import Post from "../MyPosts/Post/Post";
 
-let posts = [
-  { id: 1, message: "How are you?" },
-  { id: 2, message: "My first post" }
-];
+const MyPosts = (props) => {
+	let postsElements = props.posts.map((p) => (
+		<Post message={p.message} likesCount={p.likesCount}/>
+	));
 
-let postsElements = posts.map(p => <Post message={p.message} />);
+	let newPostElement = React.createRef();
 
-const MyPosts = props => {
-  return (
-    <div className={classes.postsBlock}>
-      <h3>My Posts</h3>
-      <div>
-        <div>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
-        </div>
-        <div>
-          <button>Add post</button>
-          <button>Remove</button>
-        </div>
-      </div>
-      <div className={classes.posts}>{postsElements}</div>
-    </div>
-  );
+	let onAddPost = () => {
+		props.addPost();
+	};
+
+	let onPostChange = () => {
+		let text = newPostElement.current.value;
+		props.updateNewPostText(text);
+	};
+
+	return (
+		<div className={classes.postsBlock}>
+			<h3>My Posts</h3>
+			<div>
+				<div>
+          <textarea
+	          onChange={onPostChange}
+	          ref={newPostElement}
+	          value={props.newPostText}
+          />
+				</div>
+				<div>
+					<button onClick={onAddPost}>Add post</button>
+					<button>Remove</button>
+				</div>
+			</div>
+			<div className={classes.posts}>{postsElements}</div>
+		</div>
+	);
 };
 
 export default MyPosts;
