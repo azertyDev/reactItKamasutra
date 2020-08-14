@@ -1,54 +1,47 @@
-import React from "react";
-import styles from "./Users.module.css";
-import axios from "axios";
+import React from 'react';
+import styles from './Users.module.css';
+import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
-  console.log(props.users);
-  const getUsers = () => {
-    if (props.users.length === 0) {
-      axios
-        .get("https://social-network.samuraijs.com/api/1.0/users")
-        .then((response) => {
-          props.setUsers(response.data.items);
-          console.log(response.data.items);
-        });
-    }
-  };
+  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+
+  let pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
+  }
 
   return (
     <div className={styles.container}>
-      <button onClick={getUsers} className={styles.button}>
-        Get users
-      </button>
       {props.users.map((u) => (
         <div key={u.id} className={styles.content}>
           <div className={styles.row}>
             <div>
-              <img
-                alt="userPhoto"
-                src={
-                  u.photos.small != null
-                    ? u.photos.small
-                    : "https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg"
-                }
-                className={styles.userPhoto}
-              />
+              <NavLink to={'/profile/' + u.id}>
+                <img
+                  alt="userPhoto"
+                  src={
+                    u.photos.small != null
+                      ? u.photos.small
+                      : 'https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg'
+                  }
+                  className={styles.userPhoto}
+                />
+              </NavLink>
             </div>
             <div>
               {u.followed ? (
                 <button
                   onClick={() => {
-                    props.unfollow(u.id);
-                  }}
-                >
+                    props.unFollow(u.id);
+                  }}>
                   Follow
                 </button>
               ) : (
                 <button
                   onClick={() => {
                     props.follow(u.id);
-                  }}
-                >
+                  }}>
                   Unfollow
                 </button>
               )}
@@ -62,11 +55,25 @@ const Users = (props) => {
             </div>
             <div>
               <div>{u.id}</div>
-              <div>{"u.location.city"}</div>
+              <div>{'u.location.city'}</div>
             </div>
           </div>
         </div>
       ))}
+
+      <div className={styles.pagination}>
+        {pages.map((p) => {
+          return (
+            <span
+              className={props.currentPage === p && styles.selectedPage}
+              onClick={(e) => {
+                props.onPageChanged(p);
+              }}>
+              {p}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 };

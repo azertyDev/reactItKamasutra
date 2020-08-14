@@ -1,17 +1,12 @@
-import React from "react";
-import {
-  addPostActionCreator,
-  updateNewPostTextActionCreator,
-} from "../../../redux/profileReducer";
-import MyPosts from "./MyPosts";
-import { connect } from "react-redux";
+import React from 'react';
+import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profileReducer';
+import MyPosts from './MyPosts';
+import { connect } from 'react-redux';
 
 const mapStateToProps = ({ profilePage }) => {
-  console.log("statexxxx: ", profilePage);
-
   return {
     posts: profilePage.posts,
-    newPostText: profilePage.newPostText,
+    newPostText: profilePage.newPostText
   };
 };
 
@@ -23,13 +18,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     addPost: () => {
       dispatch(addPostActionCreator());
-    },
+    }
   };
 };
 
-const SuperMyPostsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MyPosts);
+const SuperMyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 
 export default SuperMyPostsContainer;
