@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css';
 import { GridLoader } from 'react-spinners';
+import ProfileStatus from './ProfileStatus';
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -8,13 +9,15 @@ const ProfileInfo = (props) => {
   }
   return (
     <div>
-      <div>
+      {/* <div>
         <img src="https://www.w3schools.com/howto/img_snow_wide.jpg"></img>
-      </div>
+      </div> */}
       <div className={classes.descriptionBlock}>
         <h1>{props.profile.fullName}</h1>
         <img src={props.profile.photos.large} alt="profileImage" />
         <h4>{props.profile.aboutMe}</h4>
+        <br />
+        <ProfileStatus status="Hello my friend" />
       </div>
     </div>
   );

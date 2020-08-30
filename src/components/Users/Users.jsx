@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Users.module.css';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
@@ -32,17 +31,19 @@ const Users = (props) => {
             <div>
               {u.followed ? (
                 <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
                     props.unFollow(u.id);
                   }}>
-                  Follow
+                  unFollow
                 </button>
               ) : (
                 <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
                     props.follow(u.id);
                   }}>
-                  Unfollow
+                  Follow
                 </button>
               )}
             </div>
